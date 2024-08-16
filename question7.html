@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorite Color Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+   body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background: url('https://wallpapers.com/blog/wp-content/uploads/2023/06/glitter-golden-bokeh-lights-scaled.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+}
+
+.question-container {
+    background: url('https://plus.unsplash.com/premium_photo-1664443577580-dd2674e9d359?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHVycGxlJTIwYmFja2dyb3VuZHxlbnwwfHwwfHx8MA%3D%3D') no-repeat center center;
+    background-size: cover;
+    color: white;
+    padding: 30px;
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px); /* Adds a frosted glass effect */
+}
+
+.question-number {
+    background-color: #ffcc00;
+    color: #000;
+    padding: 15px;
+    border-radius: 50%;
+    font-size: 28px;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.question {
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+.options-container {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.option {
+    background-color: #d9534f; /* Bootstrap red */
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 150px;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, background-color 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.option:hover {
+    transform: scale(1.05);
+    background-color: #c9302c; /* Darker red for hover effect */
+}
+
+.option img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.option-name {
+    font-size: 18px;
+    color: #fff;
+}
+
+.timer-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.clock {
+    width: 60px;
+    height: 60px;
+    background-image: url('/arrow-clockwise.svg');
+    background-size: cover;
+    animation: rotate 15s linear infinite;
+}
+
+.time {
+    font-size: 24px;
+    margin-left: 15px;
+    color: #fff;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="question-container">
+        <div class="question-number">7</div>
+        <h2 class="question">My academic performance makes me feel</h2>
+
+        <!-- Timer Container -->
+        <div class="timer-container">
+            <div class="clock"></div>
+            <div class="time" id="timer">10</div>
+        </div>
+
+        <div class="options-container">
+            <div class="option" onclick="nextPage()">
+                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxASEhUQEhISFRAVEA8QFRUQFQ8PFRAPFRUWFhUVFRUYHSggGBolGxUVIjEhJSkrLi4uFx8zODMsNygtLisBCgoKDg0OFxAQFysdFx8tKy0rLSstNysrKysrLS0rLS0tLS0tKy0rKy0tLSstLSsrLSstLSstLS0rLS0tKzc3Lf/AABEIAKgBLAMBIgACEQEDEQH/xAAcAAACAgMBAQAAAAAAAAAAAAACAwEEAAYHBQj/xAA9EAACAgECAwUGAwYFBAMAAAABAgADEQQhBRIxBhNBUXEHImGBkaEUMkIjM1JyscFigrLR8FODkvEWJDT/xAAZAQADAQEBAAAAAAAAAAAAAAAAAQIDBAX/xAAhEQEBAQEAAwADAQADAAAAAAAAARECAyExBBJBEyIyUf/aAAwDAQACEQMRAD8A0sCGBIEIT0nKnEICYIYEAwCMUSAIaiAEojVgqI1FkmIJGIsxRHIIBAWMVYaLmOSuI0V1xvdyQIxREAqI6QEhKkQEoks8JRiJ1FiqC7kBQMknoBEaczOeKouVwGQgqehEYFjIXWGogquIxYBKiMBgAQhAGLDWCgjlERs5YQWMrQE79Miexo7RYvee61aLylFAYrYrEMcDrsOkx8vmnFkb+Lw3uWvC5IS1GN/EU2nmp5iuATlXUAknA3HXA6RyVyue51NjPvi8XKQK5IWWAkzu4yJFcNaoxVjFWAINUBq5dKTDXEeKK1xndyxyiSFgHFgIYEzEICdbFgEYoggRqxBIEMCQIaiBiSWEESss1SQlVj1WCix6pEBVJLAWAkesRpRIfJBJxvPJ4t2moo2zz2fwp/dugk2yHJr21jSNpzcdtNT3gfC8nTuwPD165nQ+zt66xQaiAf1Kxw1fxYeXpI/05XPH1fhV+rqTId1BABx44PTaa/r0v1ZA5WTTA5JIOW+J/wBpsGq4Y1Gqe23BUJzNWy7WUDAYqfEA4J22zJ7S8bs1nLVTWKaxgZ3IIOADt4b9TOTy/k/ZGvPh/wDXkcN19FOaSMczIqHmHuN48w8SftPcVJp/HuA16Yc35rC4GbWWobDcgeIz4zbOF2l6kc4yUGcbjPjg+Imn4vkt2VPm5k+LHLCCRqJmNVMTqYELXGLVLKpHpTC08IrpjBTLtVEM0ydPFQ07YxkHbfxE8vRaG3S3A6c/sbXw6k/u2x1BP6TjpNirqlXjHAl1SpUxcJ3qs3dnBIAOxPlkiY+bmdc+23h6vPXo3W6wFkp5lZ+Yk4Zcjbf3esIUzyv/AIBVXqk1ZutYq2QhCAAgbZYDJ6TZu5k+GZyrzXenniuYyT0DRFNVNtYqqLC7uPFfwmCAJKmCQZZO0zlgar3cIJLIQSOSLQ4biSBDCyeWdjJAhiSFhhItLEARiiQFjFWKkJRHVCDWsuVVRGysSyi5gcsdWZOmzkxDrjAuYQTxgGBZzvtJoBVcyEe6feQj+E+Hy3E6MgnhdtOH95T3oHvVnPqh6/7zLy87Gnj6ytCQBTsPn1M9Ts/r3ptwpxz+5k/pbPun5HE8qw5gl8EN6fIzzOpb9enLJPTsmu4dqb6dNqb2U3cjBgAGU1uDlCfj7p9YnR6a3l5HZ1rDe7WjBVIAG7FQCfTM9vgzWXaCq3opqVgpG6kbNj/CcEj1iFQzb8bxc9bb/HP+T3Zkil+Ar692mfMqpP1O5lhKZbFe0JUE75JPjhpVdMeKcw1WWK0itBKUGW6qYyuuWkSTqsLSqMFUcqwwsWmQlMpcS7TaTROq6hmUupK8ql8AEZJxPX7ucR9pmu73X2L+moLSPUDLfcn6RU5HX9J2n0FxAr1dTu2fd5wvKMHA5TiX+WfOXZvSC3W6as9G1NWfQMD/AGn0m5EmKquw84kpLLLmLKGUkrk2izWI8gyMRhWKTOWWCkU0AXiRmMxmEEgHDysYybQraiDHom06rWSughqpMaKT1jkpJ6RApK4wVS0unJHSEtR/tFoJrqluqkw0qjz5SbTgVqhhIzk6CGasRadhaLGZjVQRgpgRGJDLtgjY7YO+RLK1THoxANE4r2QY2juSBW5Oc5/Z+P0mwcB7JUVkZXvLTsC4yAf8K+E9kVnOIriPGV0KfiCC2GACjHvM22Jn/nzNrWeTrJNb3w7gCVaVNMjHlWoICdydupmqkEEjyJE1bV+1/Wk4qqorXwBDWn65H9J7fAuI/iaVuOOZs82BgB8+9gSPDzJbh+Xq3NekkcogoI5BNmLFliswVT4TwuOdoWqtGl09T26oqGwo91AenMfCR11J7quebbkbbRLI3mgvxXjVH7SzTVPUBllrYOwHw3z/AFm6dneKV6ulb68gHIKnqjjqpmc7nXxp14+ufq3yxqpHKkNa40qurvFdb2t+VEZz6KMz5z4rqWutsub81js5+GTnE7J7UuMCnTfhl/eX5B/w1A+8fmdvrOOGkmK1cj2/ZdpOfiVR/wCmltvzC8o/1Tu3LOXex3hLG+7U/pSsVD4s5yfsPvOsckXJdE8sjkjmEAyiIYwQI0pM5IAkrF8ktFZBQQJWCSMRrEQCYzcj/CecspphiWuQScTfWStXSIVFYzHLXHU0b5hoA2m2zFisAD1l7Ub+7Eld4gAQzUT8JaFG2YFdbE7+sDSum6Q7KpbVMEZkW1ZYSTIqr3+MbZUcRt9QGPOBcSBnG8ZIqT6wDuY7Trheb5zCM74gAlPGeZ2l4cL9JbXjL8hdf5094f0x857gG0atG2Ir8EfPyHYTf/Zrqxi2nO+VsUeYxhsfaah2g0Yo1V1I6LYeX+VveX7GBwjXNTcly9UYE48V/UPmMzHm5Wt9x3CtZaRJQ4JxGrU1i2o5HQg7FW8mHnPZRJtaywNYmi8OOpS7VWVKpPfv3j3cx91P0jB+k6HSmJpOq1QNusoD9zZ34cflJZWA5j8M749Zzfkf9XX+JP8AmvV2XapgyWWU1BV9xk5O8LdT5/CZ2KsajX36ViClqd8uBj9omzbeZBz8o6x6FVGLkcuMYbcr5MM75lLglq365mAJIBdcHGACuSW8AJzcWzp1+ac9culKsYFnO+0Xb4lu60ZwoYhrSAQ2PBAfD4xtPa2+zTtUwBtYFRYBgcp2OR5zpvThnFrU+2epGq1llisWrUitCenKoweX4c2frPE/BGbBTw8jbHQz0eF8GNjhQNycTO2tv1kbd7OOHirRKf1WO9h+vKP9M2crF8N0YpqSoHIVcZ8/E/ePImkrnv0krAKyxywSsrSwnlkFY4iQRDRhIWBZGtEWGMibAIkiE7QCZROcCwEzO+GcTwKtQwOcwvxTZzmdP6Mf2bHRLanlE1zScQbxO0dZxRjtF+lP9o9qk5aPaueRpNeNsy9dxWsbZz6RWU9j0APd6SagZRo4gp2Ev0apAMkjEnKenWoB7x8IGlQnLGIOtRjgn/1LvfV8uMjeIIAy3wEK9c7fH7RmnKgZzJyvUmIEGvG2dpPdHG0eijzliqnaGhRZOkt0+UK3SZGx3zJpQ+PhAY5p7Vuzz8411a5XlC3Bd+XH5X9PA+gnO1afSN9SuCpGVIIOehB2InEO2XYy/QMXAL6Rj7rgH9lnolnl6+My6n9ac1HZTtHZo7eYb1NgWJ/Eo8R5MJ2rg/FtNqKu/rsXkxluYhTX5848J85o8u6a9wrKGIRgoYA4DYORnz3hOjvOu8Uds+G8xT8VXkeJ5uX/AMsYnjdvuzSX1rq9Ipe97EBNTc/e1FcbeGBgH6zkdU2vsTZqvxFS0G1kSwWOlZJAr6OeXp0OIuvf0+ZZfTY+D9kbjy1uwW0jIRsBgPE5O5ie0SNoHbTU25strUWlRjkr3wik+eSSfSejxC1BxQWNzFTciEqzIVOAFPyJ6dPrHe0zhxOoS3B/dheYDY4z1PnM/wBJy2/0vXr+NR0em2E2DhCFWAPSK4Tpgcbza9Dwjm3GItn9O1bPBQwDgdes9fgfDBXl8b9BLXDNOyLyt0l0CEjPrr+JmTJkpCMQTDgmAKfaKNwh3GU7BmaSJtZbqgIldRmKspJkLUeglYSLjF7nxjTpzDXTiPQ4gsIrGCqNWudrmIQRygwxXHJVmIYQsMSytAjBSItPC628to9FJhJV5COSuTTZXXLCr4wFWOrJiMZtJGMyWGcbmGlWd9o1aAJJp0rsstrrH+UrKkaKTF6D0atafKPGoB8J51a+sePSTYrV6po61FZWRwGRgVZWwQVPUESjWZbr3k2Hri/b/sO2jJ1FALaQtuNy2nz4HzTyPh4zWKRgYndu3vEBptBc/wCp17lc/wAVm3T4DJ+U4OhmdjSVYQ43nd/ZZwyurTK/Jy3uis7E55q2JZCPLY4+U4p2f4edTqadP4WWqhPkvVvtmfR6VisryjCoBUQP+kfyn5EfcxYblfaexu/tIPvLqLD5Mpzkeo2+06jXXXrtInP+W2pG26q2PA+YM5f2hXOr1Nf8NpsAOzZz+k/M7ToPs/1XPpQud0dh5YVveG3zI+ULPQad2m4E+ksXlJNbE8p8duoMv9n9VYcDJzN44twqvUKVcbge63ireYmpaZl0hKke+G5T6zK+mvN2N20RblHN1lmalouOl2G/iNp6us4sFOBHqby9iZK+i1a2LzKfX4SxGhkFoUAwBNgiykY4mNHLdw7PRIrk8o8pO8nEpJRqiWSWHbEqvdvsI4HGxiFkSuGjVYTvxy6YDGoREbQlMMGrQMYplZWjFeTg1ZUxgaIRxGqRFhnKY5DEKsYuREFpIQaIRjLCLEZ9ZGPjG1bxKiGH8pJrOYS5ldSY5IDVmtpcqeUUMO3WLWjWNsqKzk/ADJk2HHOvbFxjmsq0gO1Y71/522UfIZ+s5y1mBnylni/EH1F1l7/msdm9B4D5DE8fVWgnA6D7zG1tHZfYTp6rO/Zxm5SpryPyqRhip8+g+c62/gT0/K3oZzz2aaYU8O094HvKzW2Y6tVacNn0AU/5Z0ZgD6MPtDMFci7Ve5xG5SQQeQ4bbqi4wZtXs/v5bLK8450DBT1HKfuNzNV7ff8A7XRiP3dRww/VjAZT8QBLPZLiBTUUlj+Zu7w3UKwwMHx6yvsDrI/qZrXbvSA0d4q/tFIOR/B45+02Q9fQRV6BjykZHLuD0OZnmqlyuQ6LiPLZ1xiP1vaDLdZ5XaynuNVYoGFJZ0/kLED+hmt36k+ciT20vTo3Z7tOarAScofzDzXxnUqLVdQ6kFWAYEeIPSfMtWvKnrOq+y/tSrf/AE7G3OWqJ+rJ/cfOViOrrpBkESDYPOAbIYkRWC2PGVbdZiU7dXmVOCvS/ZcJUu1gEoW3eUpu2ZpOEXpeu1gPSJN8pgHwhd23x+0v9Yna5gBCEFWhgzqYCENYIhCBmAwwYtYxYAxY1ItRHKgiB1byzXaPGVkrjVWTTi2linpGqZUUCWK3k4rTxGrFLaPKOrx5yTFJBknEyANUzVPaXxTutIagffubu/8Atjd/7D5zaFacg9qXGO81fdKcilRX/nO7H+g+Uju5Fcza1HUXeA+crCSqk+BjqKMkA7eJnN9bPoj2Z3B9HQp3DUms+q5GPoJt3DHPJ3Z/NWeX1TwP0/pOY+yPX50Y86dQw/ysA/8AdvpOmW+7Z3g6dD8VP/MzbNiXNfa6uNVUcAiygZHQ5RmBwfRhNa0mrKlDnJRgVDbMCpzsfnNu9tejZqtPqEUstT2I5X9CPylWPwyuPnOeNflRZkMowAOj83T/AG84oH0ho7+dFsH6lVvqMyGsxzN4DH0E8vsq7jR6cWKUcUpzKeoOJPEdYoUqSADgEsQoAPXcwnJuSe0l2OrAz+XT0g+vLzN92moG2e925162a2wqwILsMqQRy7BcEfBR9ZqRs3+sys9rXTYJml4g9NiujEMrBlI8CDtKJsgWNkQJ9Kdk+0let063KQH/AC2L4pYOo9D1E9O24nxnz77OePvpdYiknurmWmweGWOFb1DEfImd8aa8+2XXot2imMaQPOAzDylpIYQO5PjHNYYpjGEgKo6bxRtkMIJQwwnMQsMLDAhgTr1jhYEMLDCwwIjAqxyLJXEMNADRY1YoGEIgsK4EMWyrJSGDVwWRi2SqqxqrJsGraPLFbSpXXLCKPGTVRYBgmKNoki34RYeo1l/dVvad+St3/wDEEz5+u5rHa2w5d2Z2/mY5M7/codWQ9GVlPoRicF1emaqx6m/Mjsh+RxMfLPjTx2CvOB7uNt9vKJquBbOPA/WTeMgEdcY9cf8ABK9VnLnbeY361dG9juu5bNTp/NEuUeZRsN9mE6rZ2o0taDvr662AKkO6ggrt06+X1nzOrupJRmVsYJUlSVIGRkeEjkPid+uTvmXO8hY77xD2lcLKtVzG/mBTkVG5HztgsRgCcw4ZxqirU95+FHKluSpJtFKg7sB4kbdfKaiNvX5x7ahz1djnqM7H184uurRI2/i3tL4lecC7kXJ/cKEyPXc/ea1qtXdceayx3Pm7M/8AWU1aGrxW01lNgPgcwbz733+sXzzo/s87OcP4hpyLg3f02OG7tu7L1vgoW88bgRSC1z18YyD4biRpdPbcwrprexycYrUuc/LpO/aHsFwqrppUY+dxe77McfabDptNXWOWtERfJFVB9pU4T+zk3ZL2Z6k2JfqytSK62d2CGscqQQCRsoyPiZ1xsSWMWWEuTEW6FopjGFxFM48pWEFmii8x2MXymVhCLweaZ3RmcnxjDmgaEGMmZOpiJSYxRMmRA+uuWUrAmTJJmqPhGCZMkmzlEYlPwmTIaIsioAdJKIJkySYysgYHxkzIyBjPrHJSZEyK0Q3uZq/aLsRVq371XNdpADFQGV8dCR5/GTMis2e1S58eDd7LLcYXVL44yjdfkZ5dvsv14PuvQ3xLOn25TMmTO+OK/etd43wmzSXGi0qbAFY8hJA5hkDJAlAmZMmFmVtPiFs8DCzMmRGwtCUzJkAkvNi9n/Hzo9bW5P7Kw9zZ/Ix2PyOD9ZkyOfSr6D/ESDfMmToxgHvYPNMmR4GQTJmRGAtFtb6TJkZFNbFm2ZMlYH//2Q==" alt="Option 1">
+                <div class="option-name">proud</div>
+            </div>
+            <div class="option" onclick="nextPage()">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMEQuRTHJpQGu7k05Pqfq--bXg-x5PEC-_8g&s" alt="Option 2">
+                <div class="option-name">It's Okay</div>
+            </div>
+            <div class="option" onclick="nextPage()">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYm4XpbJRSlaMeaG6wBORqTeumYW1xTuEGqQ&s" alt="Option 3">
+                <div class="option-name">Not Good</div>
+            </div>
+            <div class="option" onclick="nextPage()">
+                <img src="https://static.thenounproject.com/png/2821166-200.png" alt="Option 4">
+                <div class="option-name">Other</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let timeLeft = 10;
+        const timerElement = document.getElementById('timer');
+        let isNextPageTriggered = false; // Flag to prevent multiple triggers
+    
+        const countdown = setInterval(() => {
+            if (timeLeft <= 0) {
+                if (!isNextPageTriggered) {
+                    nextPage(); // Automatically move to next question when time's up
+                }
+                clearInterval(countdown);
+            } else {
+                timerElement.textContent = timeLeft;
+                timeLeft--;
+            }
+        }, 1000);
+    
+        function nextPage() {
+            if (!isNextPageTriggered) {
+                isNextPageTriggered = true;
+                clearInterval(countdown); // Stop the countdown if nextPage is manually triggered
+                // Redirect to the next question or page
+                window.location.href = "question8.html"; // Replace with your actual navigation logic
+            }
+        }
+    </script>
+</html>

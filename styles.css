@@ -1,0 +1,189 @@
+body {
+    background: url('https://wallpapers.com/blog/wp-content/uploads/2023/06/glitter-golden-bokeh-lights-scaled.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.container {
+    background: url('https://plus.unsplash.com/premium_photo-1664443577580-dd2674e9d359?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHVycGxlJTIwYmFja2dyb3VuZHxlbnwwfHwwfHx8MA%3D%3D') no-repeat center center;
+    background-size: cover;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #fff; /* Ensures text is readable on the background image */
+    position: relative; /* To position the overlay */
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay for better text readability */
+    z-index: 1;
+}
+
+.container > * {
+    position: relative;
+    z-index: 2;
+}
+
+.container:hover {
+    transform: scale(1.03);
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.6);
+}
+
+.question {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 28px;
+    color: #ffcc00; /* Changed to a more readable color */
+}
+
+.timer {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #ffcc00; /* More contrast for better visibility */
+    color: #000;
+    font-size: 28px;
+    line-height: 60px;
+    margin: 15px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.timer:hover {
+    background-color: #ff9900;
+    transform: rotate(360deg);
+}
+
+.color-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    margin-top: 20px;
+}
+
+.color-option {
+    background-color: rgba(57, 57, 57, 0.8);
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.color-option:hover {
+    background-color: #595959;
+    transform: translateY(-10px);
+}
+
+.color-swatch {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    background-color: #eee;
+    transition: transform 0.3s ease;
+}
+
+.color-swatch:hover {
+    transform: rotate(360deg);
+}
+
+.color-swatch span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 36px;
+    line-height: 70px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.timer-progress {
+    background-color: #444;
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.timer-progress-bar {
+    flex-grow: 1;
+    height: 12px;
+    background-color: #666;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.timer-progress-value,
+.timer-progress-total {
+    color: #fff;
+    font-size: 14px;
+    padding: 0 8px;
+}
+
+.timer-progress-arrow {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ffcc00;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.timer-progress-arrow:hover {
+    background-color: #ff9900;
+}
+
+/* Unified block for color-swatch styling */
+.color-option[data-color="other"] .color-swatch {
+    background: linear-gradient(
+        to right,
+        blue,
+        green,
+        red,
+        violet,
+        yellow
+    );
+    transition: background 0.3s ease;
+}
+
+.color-option[data-color="other"] .color-swatch span {
+    color: #000;
+    font-size: 52px;
+    line-height: 70px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .color-options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .color-options {
+        grid-template-columns: 1fr;
+    }
+}

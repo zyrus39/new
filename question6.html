@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorite Color Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+   body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background: url('https://wallpapers.com/blog/wp-content/uploads/2023/06/glitter-golden-bokeh-lights-scaled.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+}
+
+.question-container {
+    background: url('https://plus.unsplash.com/premium_photo-1664443577580-dd2674e9d359?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHVycGxlJTIwYmFja2dyb3VuZHxlbnwwfHwwfHx8MA%3D%3D') no-repeat center center;
+    background-size: cover;
+    color: white;
+    padding: 30px;
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px); /* Adds a frosted glass effect */
+}
+
+.question-number {
+    background-color: #ffcc00;
+    color: #000;
+    padding: 15px;
+    border-radius: 50%;
+    font-size: 28px;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.question {
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+.options-container {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.option {
+    background-color: #d9534f; /* Bootstrap red */
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 150px;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, background-color 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.option:hover {
+    transform: scale(1.05);
+    background-color: #c9302c; /* Darker red for hover effect */
+}
+
+.option img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.option-name {
+    font-size: 18px;
+    color: #fff;
+}
+
+.timer-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.clock {
+    width: 60px;
+    height: 60px;
+    background-image: url('/arrow-clockwise.svg');
+    background-size: cover;
+    animation: rotate 15s linear infinite;
+}
+
+.time {
+    font-size: 24px;
+    margin-left: 15px;
+    color: #fff;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="question-container">
+        <div class="question-number">6</div>
+        <h2 class="question">I Believe I can achieve My Goals</h2>
+
+        <!-- Timer Container -->
+        <div class="timer-container">
+            <div class="clock"></div>
+            <div class="time" id="timer">10</div>
+        </div>
+
+        <div class="options-container">
+            <div class="option" onclick="nextPage()">
+                <img src="https://daily.wordreference.com/wp-content/uploads/2017/01/definitely.jpg" alt="Option 1">
+                <div class="option-name">Definitely</div>
+            </div>
+            <div class="option" onclick="nextPage()">
+                <img src="https://cleverpm.com/wp-content/uploads/2015/01/dontknow-blog.png" alt="Option 2">
+                <div class="option-name">Not Sure</div>
+            </div>
+            <div class="option" onclick="nextPage()">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYi7h_2eMdDVlI7Brn-11XN9HKQ1aKF7MxvA&s" alt="Option 3">
+                <div class="option-name">I Don't Think So</div>
+            </div>
+            <div class="option" onclick="nextPage()">
+                <img src="https://static.thenounproject.com/png/2821166-200.png" alt="Option 4">
+                <div class="option-name">Other</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let timeLeft = 10;
+        const timerElement = document.getElementById('timer');
+        let isNextPageTriggered = false; // Flag to prevent multiple triggers
+    
+        const countdown = setInterval(() => {
+            if (timeLeft <= 0) {
+                if (!isNextPageTriggered) {
+                    nextPage(); // Automatically move to next question when time's up
+                }
+                clearInterval(countdown);
+            } else {
+                timerElement.textContent = timeLeft;
+                timeLeft--;
+            }
+        }, 1000);
+    
+        function nextPage() {
+            if (!isNextPageTriggered) {
+                isNextPageTriggered = true;
+                clearInterval(countdown); // Stop the countdown if nextPage is manually triggered
+                // Redirect to the next question or page
+                window.location.href = "question7.html"; // Replace with your actual navigation logic
+            }
+        }
+    </script>
+</html>
